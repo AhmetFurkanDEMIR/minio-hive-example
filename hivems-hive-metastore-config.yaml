@@ -1,0 +1,107 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hivems-hive-metastore
+  namespace: hive-metastore
+  labels:
+    app.kubernetes.io/instance: hivems
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: hive-metastore
+    app.kubernetes.io/part-of: hive-metastore
+    app.kubernetes.io/version: 2.3.6
+    helm.sh/chart: hive-metastore-0.1.3
+  annotations:
+    meta.helm.sh/release-name: hivems
+    meta.helm.sh/release-namespace: hive-metastore
+  managedFields:
+    - manager: helm
+      operation: Update
+      apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:data: {}
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:meta.helm.sh/release-name: {}
+            f:meta.helm.sh/release-namespace: {}
+          f:labels:
+            .: {}
+            f:app.kubernetes.io/instance: {}
+            f:app.kubernetes.io/managed-by: {}
+            f:app.kubernetes.io/name: {}
+            f:app.kubernetes.io/part-of: {}
+            f:app.kubernetes.io/version: {}
+            f:helm.sh/chart: {}
+    - manager: dashboard
+      operation: Update
+      apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:data:
+          f:hive-site.xml: {}
+data:
+  hive-site.xml: |
+    <?xml version="1.0"?>
+    <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+    <configuration>
+
+        <property>
+          <name>javax.jdo.option.ConnectionURL</name>
+          <value>jdbc:postgresql://hivems-postgresql/metastore</value>
+        </property>
+        <property>
+          <name>javax.jdo.option.ConnectionDriverName</name>
+          <value>org.postgresql.Driver</value>
+        </property>
+        <property>
+          <name>javax.jdo.option.ConnectionUserName</name>
+          <value>hive</value>
+        </property>
+        <property>
+          <name> javax.jdo.option.ConnectionPassword</name>
+          <value>hive</value>
+        </property>
+        <property>
+          <name>datanucleus.autoCreateSchema</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>datanucleus.schema.autoCreateTables</name>
+          <value>true</value>
+        </property>
+        <property>
+          <name>datanucleus.autoCreateTables</name>
+          <value>True</value>
+        </property>
+        <property>
+          <name>hive.metastore.uris</name>
+          <value>thrift://hivems-hive-metastore:9083</value>
+        </property>
+        
+        <property>
+          <name>hive.metastore.schema.verification</name> 
+          <value>false</value> 
+        </property> 
+        <property> 
+          <!-- this should eventually be deprecated since the metastore should supply this --> 
+          <name>hive.metastore.warehouse.dir</name> 
+          <value>file:///tmp</value>
+          <description></description> 
+        </property>
+        <property> 
+          <name>fs.default.name</name> 
+          <value>file:///tmp</value> 
+        </property>
+        <property>
+          <name>hive.metastore.event.db.notification.api.auth</name>
+          <value>false</value>
+          <description>
+            Should metastore do authorization against database notification related APIs such as get_next_notification.
+            If set to true, then only the superusers in proxy settings have the permission
+          </description>
+        </property>
+
+        
+        <property><name>hive_metastore_uris</name><value>thrift://hive-metastore:9083</value></property>
+    </configuration>

@@ -1,0 +1,68 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: hivems-postgresql-headless
+  namespace: hive-metastore
+  labels:
+    app.kubernetes.io/instance: hivems
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: postgresql-10.2.8
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: 'true'
+  annotations:
+    meta.helm.sh/release-name: hivems
+    meta.helm.sh/release-namespace: hive-metastore
+  managedFields:
+    - manager: helm
+      operation: Update
+      apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:meta.helm.sh/release-name: {}
+            f:meta.helm.sh/release-namespace: {}
+          f:labels:
+            .: {}
+            f:app.kubernetes.io/instance: {}
+            f:app.kubernetes.io/managed-by: {}
+            f:app.kubernetes.io/name: {}
+            f:helm.sh/chart: {}
+            f:service.alpha.kubernetes.io/tolerate-unready-endpoints: {}
+        f:spec:
+          f:clusterIP: {}
+          f:internalTrafficPolicy: {}
+          f:ports:
+            .: {}
+            k:{"port":5432,"protocol":"TCP"}:
+              .: {}
+              f:name: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:publishNotReadyAddresses: {}
+          f:selector: {}
+          f:sessionAffinity: {}
+          f:type: {}
+spec:
+  ports:
+    - name: tcp-postgresql
+      protocol: TCP
+      port: 5432
+      targetPort: tcp-postgresql
+  selector:
+    app.kubernetes.io/instance: hivems
+    app.kubernetes.io/name: postgresql
+  clusterIP: None
+  clusterIPs:
+    - None
+  type: ClusterIP
+  sessionAffinity: None
+  publishNotReadyAddresses: true
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}
