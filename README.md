@@ -22,4 +22,8 @@ Edit the file with your own information. [hivems-hadoop-metastore-config.yaml](/
     </property>
 ```
 
+```bash
+bash run.sh
+```
+
 Article Link: 
