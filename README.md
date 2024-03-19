@@ -26,4 +26,4 @@ Edit the file with your own information. [hivems-hadoop-metastore-config.yaml](/
 bash run.sh
 ```
 
-Article Link: 
+Article Link: https://medium.com/@ahmetfurkandemir/kubernetes-with-data-engineering-approach-2-querying-to-object-storage-minio-with-trino-using-ae68ffbde9f9
